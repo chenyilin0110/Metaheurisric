@@ -1,17 +1,15 @@
-import numpy as np
+import random
 
-def determine(solution):
-    distance = 0
-    for eachcity in range(np.size(solution, 0)):
-        if eachcity < (np.size(solution, 0) - 1):
-            x1 = solution[eachcity][1]
-            x2 = solution[eachcity+1][1]
-            y1 = solution[eachcity][2]
-            y2 = solution[eachcity+1][2]
-        else:
-            x1 = solution[eachcity][1]
-            x2 = solution[0][1]
-            y1 = solution[eachcity][2]
-            y2 = solution[0][2]
-        distance += np.sqrt(np.square(x1-x2) + np.square(y1-y2))
-    return distance
+def determine(old_solution, old_distance, new_solution, new_distance):
+    if new_distance < old_distance:
+        return new_distance, new_solution
+    else:
+        return old_distance, old_solution
+
+def determine_sa(old_solution, old_distance, new_solution, new_distance, exp_change):
+    r = random.random()
+    
+    if (new_distance < old_distance) or (exp_change > r):
+        return new_distance, new_solution
+    else:
+        return old_distance, old_solution
