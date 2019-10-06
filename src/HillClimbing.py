@@ -27,6 +27,6 @@ while(eachiteration != int(iteration)):
     
     solution = best_solution.copy()
     
-    print(eachiteration + 1, best_value)
+    print(best_value)
     
     eachiteration += 1
