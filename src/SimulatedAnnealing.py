@@ -30,7 +30,7 @@ old_solution = solution.copy()
 best_solution = solution[0].copy()
 best_value = evaluation(solution[0])
 
-while((eachiteration != int(iteration)) and (temperature > 0)):
+while((eachiteration != int(iteration)) and (float(temperature) > 0)):
     distance = np.zeros(int(neighbor_number))
     
     for each_neighbor_number in range(int(neighbor_number)):
@@ -40,6 +40,7 @@ while((eachiteration != int(iteration)) and (temperature > 0)):
 
     best_neighbor_distance = np.min(distance)
     best_neighbor_distance_index = np.where(distance==np.min(distance))
+    
     # the best neighbor has more than one
     if np.size(best_neighbor_distance_index,1) > 1:
         best_neighbor_distance_index = best_neighbor_distance_index[0][0]
@@ -47,7 +48,7 @@ while((eachiteration != int(iteration)) and (temperature > 0)):
 
     try:
         exp_change = math.exp(\
-        (-1) * (best_neighbor_distance - best_value)/temperature)
+        (-1) * (best_neighbor_distance - best_value)/float(temperature))
     except OverflowError:
         exp_change = float('inf')
 
@@ -59,9 +60,9 @@ while((eachiteration != int(iteration)) and (temperature > 0)):
 
     for each_neighbor_number in range(int(neighbor_number)):
         solution[each_neighbor_number] = best_solution.copy()
+
+    temperature = float(rate) * float(temperature)
     
-    temperature = rate * temperature
-    
-    print(eachiteration + 1, best_value, temperature)
+    print(best_value)
     
     eachiteration += 1
