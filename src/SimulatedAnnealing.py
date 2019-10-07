@@ -5,6 +5,7 @@ from Initial import initial
 from Transaction import transaction
 from Evaluation import evaluation
 from Determine import determine_sa
+from Update import update
 
 iteration = sys.argv[1]
 city = sys.argv[2]
@@ -61,7 +62,7 @@ while((eachiteration != int(iteration)) and (float(temperature) > 0)):
     for each_neighbor_number in range(int(neighbor_number)):
         solution[each_neighbor_number] = best_solution.copy()
 
-    temperature = float(rate) * float(temperature)
+    temperature = update(rate, temperature)
     
     print(best_value)
     
