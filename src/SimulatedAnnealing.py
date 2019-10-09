@@ -5,7 +5,8 @@ from Initial import initial
 from Transaction import transaction
 from Evaluation import evaluation
 from Determine import determine_sa
-from Update import update
+import Update
+import matplotlib.pyplot as plt
 
 iteration = sys.argv[1]
 city = sys.argv[2]
@@ -31,6 +32,9 @@ old_solution = solution.copy()
 best_solution = solution[0].copy()
 best_value = evaluation(solution[0])
 
+plt.figure()
+plt.ion()
+
 while((eachiteration != int(iteration)) and (float(temperature) > 0)):
     distance = np.zeros(int(neighbor_number))
     
@@ -53,17 +57,30 @@ while((eachiteration != int(iteration)) and (float(temperature) > 0)):
     except OverflowError:
         exp_change = float('inf')
 
-    temp_value, temp_solution= determine_sa\
+    best_value, best_solution= determine_sa\
         (best_solution, best_value, solution[best_neighbor_distance_index], best_neighbor_distance, exp_change)
 
-    best_value = temp_value
-    best_solution = temp_solution
-
-    for each_neighbor_number in range(int(neighbor_number)):
-        solution[each_neighbor_number] = best_solution.copy()
-
-    temperature = update(rate, temperature)
+    best_solution = best_solution.reshape(int(city), -1)
+    
+    solution = Update.update_neighbor_solution(int(neighbor_number), best_solution, solution)
+    temperature = Update.update_temperature(rate, temperature)
     
     print(best_value)
     
     eachiteration += 1
+
+    x = []
+    y = []
+    for each_city in range(int(city)):
+        x.append(best_solution[each_city][1])
+        y.append(best_solution[each_city][2])
+    x.append(best_solution[0][1])
+    y.append(best_solution[0][2])
+
+    plt.cla()
+    plt.title('Simulated Annealing' + ' ' + str(eachiteration) + ' ' + str(best_value))
+    plt.plot(x, y, 'r')
+    plt.pause(0.1)
+plt.ioff()
+plt.show()
+plt.close()

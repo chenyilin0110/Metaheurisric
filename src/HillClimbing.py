@@ -4,6 +4,7 @@ from Initial import initial
 from Transaction import transaction
 from Evaluation import evaluation
 from Determine import determine
+import matplotlib.pyplot as plt
 
 iteration = sys.argv[1]
 city = sys.argv[2]
@@ -18,6 +19,9 @@ solution = initial(data, int(city), int(dim))
 best_solution = solution.copy()
 best_value = evaluation(solution)
 
+plt.figure()
+plt.ion()
+
 while(eachiteration != int(iteration)):
     old_solution,  solution = transaction(solution)
 
@@ -30,3 +34,19 @@ while(eachiteration != int(iteration)):
     print(best_value)
     
     eachiteration += 1
+
+    x = []
+    y = []
+    for each_city in range(int(city)):
+        x.append(best_solution[each_city][1])
+        y.append(best_solution[each_city][2])
+    x.append(best_solution[0][1])
+    y.append(best_solution[0][2])
+    
+    plt.cla()
+    plt.title('Hill Climbing' + ' ' + str(eachiteration) + ' ' + str(best_value))
+    plt.plot(x, y, 'r')
+    plt.pause(0.05)
+plt.ioff()
+plt.show()
+plt.close()
