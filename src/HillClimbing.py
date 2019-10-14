@@ -4,6 +4,7 @@ from Initial import initial
 from Transaction import transaction
 from Evaluation import evaluation
 from Determine import determine
+from Plot import plot_hc
 import matplotlib.pyplot as plt
 
 iteration = sys.argv[1]
@@ -35,18 +36,7 @@ while(eachiteration != int(iteration)):
     
     eachiteration += 1
 
-    x = []
-    y = []
-    for each_city in range(int(city)):
-        x.append(best_solution[each_city][1])
-        y.append(best_solution[each_city][2])
-    x.append(best_solution[0][1])
-    y.append(best_solution[0][2])
-    
-    plt.cla()
-    plt.title('Hill Climbing' + ' ' + str(eachiteration) + ' ' + str(best_value))
-    plt.plot(x, y, 'r')
-    plt.pause(0.05)
+    plot_hc(int(city), best_solution, eachiteration,  best_value)    
 plt.ioff()
 plt.show()
 plt.close()
