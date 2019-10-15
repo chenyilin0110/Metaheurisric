@@ -20,9 +20,9 @@ done
 
 run="30"
 which_algo="HC"
-python src/calculateAvg.py $which_algo $run $iteration >> result/Avg/$which_algo.txt
+python src/CalculateAvg.py $which_algo $run $iteration >> result/Avg/$which_algo.txt
 
 which_algo="SA"
-python src/calculateAvg.py $which_algo $run $iteration >> result/Avg/$which_algo.txt
+python src/CalculateAvg.py $which_algo $run $iteration >> result/Avg/$which_algo.txt
 
 gnuplot src/draw/plot.plt
